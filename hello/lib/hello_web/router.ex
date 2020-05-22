@@ -2,7 +2,7 @@ defmodule HelloWeb.Router do
   use HelloWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "text"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -32,6 +32,9 @@ defmodule HelloWeb.Router do
     end
     resources "/comments", CommentController, except: [:delete]
     resources "/reviews", ReviewController
+
+    get "/redirect_test", PageController, :redirect_test
+    get "/redirect_external", PageController, :redirect_external
   end
 
   # scope "/reviews", HelloWeb do
