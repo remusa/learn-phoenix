@@ -26,7 +26,8 @@ defmodule HelloWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
       summary("phoenix.router_dispatch.stop.duration",
-        tags: [:route],
+        tags: [:method, :route],
+        tag_values: &get_and_put_http_method/1,
         unit: {:native, :millisecond}
       ),
 
@@ -42,7 +43,13 @@ defmodule HelloWeb.Telemetry do
       summary("vm.total_run_queue_lengths.total"),
       summary("vm.total_run_queue_lengths.cpu"),
       summary("vm.total_run_queue_lengths.io")
-    ]
+
+      # last_value("my_app.users.total"),
+      # last_value("my_app.my_server.memory", unit: :byte),
+      # last_value("my_app.my_server.message_queue_len")
+      # summary("my_app.my_server.call.stop.duration"),
+      # counter("my_app.my_server.call.exception")
+      ]
   end
 
   defp periodic_measurements do
@@ -50,6 +57,13 @@ defmodule HelloWeb.Telemetry do
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
       # {HelloWeb, :count_users, []}
+      {MyApp, :measure_users, []},
+      {:process_info,
+       event: [:my_app, :my_server], name: MyApp.MyServer, keys: [:message_queue_len, :memory]}
     ]
+  end
+
+  defp get_and_put_http_method(%{conn: %{method: method}} = metadata) do
+    Map.put(metadata, :method, method)
   end
 end
