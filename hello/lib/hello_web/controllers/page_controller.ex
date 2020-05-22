@@ -4,12 +4,12 @@ defmodule HelloWeb.PageController do
   def index(conn, _params) do
     # render(conn, "index.html")
 
-    # conn
-    # |> put_layout("app.html")
-    # |> put_status(202)
-    # |> put_flash(:info, "Welcome to Phoenix, from flash info!")
-    # |> put_flash(:error, "Let's pretend we have an error.")
-    # |> render(:index)
+    conn
+    |> put_layout("app.html")
+    |> put_status(202)
+    |> put_flash(:info, "Welcome to Phoenix, from flash info!")
+    |> put_flash(:error, "Let's pretend we have an error.")
+    |> render(:index)
 
     # redirect
     # redirect(conn, to: "/redirect_test")
@@ -25,10 +25,10 @@ defmodule HelloWeb.PageController do
     # |> render("index.xml", content: some_xml_content)
 
     # flash messages + redirect
-    conn
-    |> put_flash(:info, "Welcome to Phoenix, from flash info!")
-    |> put_flash(:error, "Let's pretend we have an error.")
-    |> redirect(to: Routes.page_path(conn, :redirect_test))
+    # conn
+    # |> put_flash(:info, "Welcome to Phoenix, from flash info!")
+    # |> put_flash(:error, "Let's pretend we have an error.")
+    # |> redirect(to: Routes.page_path(conn, :redirect_test))
   end
 
   def redirect_test(conn, _params) do

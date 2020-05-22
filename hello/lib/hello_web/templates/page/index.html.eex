@@ -35,4 +35,7 @@
       </li>
     </ul>
   </article>
+
+  <!-- <%= render(HelloWeb.PageView, "test.html", message: "Hello from layout!") %> -->
+  <%= render("test.html", message: "Hello from sibling template!") %>
 </section>
