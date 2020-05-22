@@ -40,10 +40,10 @@ defmodule HelloWeb.Router do
     resources "/", ReviewController
   end
 
-  scope "/" do
-    pipe_through [:authenticate_user, :ensure_admin]
-    forward "/jobs", BackgroundJob.Plug, name: "Hello Phoenix"
-  end
+  # scope "/" do
+  #   pipe_through [:authenticated_user, :ensure_admin]
+  #   forward "/jobs", BackgroundJob.Plug, name: "Hello Phoenix"
+  # end
 
   scope "/admin", HelloWeb.Admin, as: :admin do
     pipe_through :browser
