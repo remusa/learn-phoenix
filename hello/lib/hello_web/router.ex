@@ -27,11 +27,13 @@ defmodule HelloWeb.Router do
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
 
-    resources "/users", UserController do
-      resources "/posts", PostController, only: [:index, :show]
-    end
-    resources "/comments", CommentController, except: [:delete]
-    resources "/reviews", ReviewController
+    # resources "/users", UserController do
+    #   resources "/posts", PostController, only: [:index, :show]
+    # end
+    # resources "/comments", CommentController, except: [:delete]
+    # resources "/reviews", ReviewController
+
+    resources "/posts", PostController
 
     get "/redirect_test", PageController, :redirect_test
     get "/redirect_external", PageController, :redirect_external
@@ -61,9 +63,11 @@ defmodule HelloWeb.Router do
     pipe_through :api
 
     scope "/v1", V1, as: :v1 do
-      resources "/images", ImageController
-      resources "/reviews", ReviewController
-      resources "/users", UserController
+      # resources "/images", ImageController
+      # resources "/reviews", ReviewController
+      # resources "/users", UserController
+
+      resources "/items", ItemController, except: [:new, :edit]
     end
   end
 
