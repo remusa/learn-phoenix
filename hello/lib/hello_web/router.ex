@@ -36,6 +36,7 @@ defmodule HelloWeb.Router do
     # resources "/reviews", ReviewController
 
     resources("/posts", PostController)
+    resources "/articles", ArticleController, except: [:new, :edit]
 
     resources("/users", UserController)
     resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
