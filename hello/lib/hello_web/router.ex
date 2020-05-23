@@ -35,6 +35,8 @@ defmodule HelloWeb.Router do
 
     resources "/posts", PostController
 
+    resources "/users", UserController
+
     get "/redirect_test", PageController, :redirect_test
     get "/redirect_external", PageController, :redirect_external
   end
