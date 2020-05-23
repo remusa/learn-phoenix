@@ -1,6 +1,9 @@
 <section class="phx-hero">
   <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
   <p>Peace-of-mind from prototype to production</p>
+
+  <div id="messages" role="log" aria-live="polite"></div>
+  <input id="chat-input" type="text"></input>
 </section>
 
 <section class="row">
@@ -18,6 +21,7 @@
       </li>
     </ul>
   </article>
+
   <article class="column">
     <h2>Help</h2>
     <ul>

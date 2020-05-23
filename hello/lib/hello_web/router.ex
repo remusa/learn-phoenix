@@ -8,6 +8,8 @@ defmodule HelloWeb.Router do
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(HelloWeb.Plugs.Locale, "en")
+    # plug OurAuth
+    # plug :put_user_token
   end
 
   # pipeline :review_checks do
@@ -106,6 +108,15 @@ defmodule HelloWeb.Router do
 
       user_id ->
         assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
+    end
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = conn.assigns[:current_user] do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
     end
   end
 end
