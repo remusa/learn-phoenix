@@ -2,12 +2,12 @@ defmodule HelloWeb.Router do
   use HelloWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html", "text"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug HelloWeb.Plugs.Locale, "en"
+    plug(:accepts, ["html", "text"])
+    plug(:fetch_session)
+    plug(:fetch_flash)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    plug(HelloWeb.Plugs.Locale, "en")
   end
 
   # pipeline :review_checks do
@@ -16,16 +16,16 @@ defmodule HelloWeb.Router do
   # end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", HelloWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    get "/", PageController, :index
+    get("/", PageController, :index)
 
-    get "/hello", HelloController, :index
-    get "/hello/:messenger", HelloController, :show
+    get("/hello", HelloController, :index)
+    get("/hello/:messenger", HelloController, :show)
 
     # resources "/users", UserController do
     #   resources "/posts", PostController, only: [:index, :show]
@@ -33,13 +33,19 @@ defmodule HelloWeb.Router do
     # resources "/comments", CommentController, except: [:delete]
     # resources "/reviews", ReviewController
 
-    resources "/posts", PostController
+    resources("/posts", PostController)
 
-    resources "/users", UserController
-    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+    resources("/users", UserController)
+    resources("/sessions", SessionController, only: [:new, :create, :delete], singleton: true)
 
-    get "/redirect_test", PageController, :redirect_test
-    get "/redirect_external", PageController, :redirect_external
+    get("/redirect_test", PageController, :redirect_test)
+    get("/redirect_external", PageController, :redirect_external)
+  end
+
+  scope "/cms", HelloWeb.CMS, as: :cms do
+    pipe_through(:browser)
+
+    resources("/pages", PageController)
   end
 
   # scope "/reviews", HelloWeb do
@@ -54,23 +60,23 @@ defmodule HelloWeb.Router do
   # end
 
   scope "/admin", HelloWeb.Admin, as: :admin do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    resources "/images", ImageController
-    resources "/reviews", ReviewController
-    resources "/users", UserController
+    resources("/images", ImageController)
+    resources("/reviews", ReviewController)
+    resources("/users", UserController)
   end
 
   # Other scopes may use custom stacks.
   scope "/api", HelloWeb.Api, as: :api do
-    pipe_through :api
+    pipe_through(:api)
 
     scope "/v1", V1, as: :v1 do
       # resources "/images", ImageController
       # resources "/reviews", ReviewController
       # resources "/users", UserController
 
-      resources "/items", ItemController, except: [:new, :edit]
+      resources("/items", ItemController, except: [:new, :edit])
     end
   end
 
@@ -85,8 +91,8 @@ defmodule HelloWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: HelloWeb.Telemetry
+      pipe_through(:browser)
+      live_dashboard("/dashboard", metrics: HelloWeb.Telemetry)
     end
   end
 
@@ -97,7 +103,7 @@ defmodule HelloWeb.Router do
         |> Phoenix.Controller.put_flash(:error, "Login required")
         |> Phoenix.Controller.redirect(to: "/")
         |> halt()
-        
+
       user_id ->
         assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
     end
