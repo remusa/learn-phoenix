@@ -57,9 +57,9 @@ defmodule HelloWeb.Telemetry do
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
       # {HelloWeb, :count_users, []}
-      {MyApp, :measure_users, []},
+      {Hello, :measure_users, []},
       {:process_info,
-       event: [:my_app, :my_server], name: MyApp.MyServer, keys: [:message_queue_len, :memory]}
+       event: [:my_app, :my_server], name: Hello.MyServer, keys: [:message_queue_len, :memory]}
     ]
   end
 
