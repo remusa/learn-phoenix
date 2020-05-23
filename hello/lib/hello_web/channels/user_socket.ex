@@ -2,7 +2,8 @@ defmodule HelloWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", HelloWeb.RoomChannel
+  # channel "room:*", HelloWeb.RoomChannel
+  channel "room:lobby", HelloWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -33,13 +34,17 @@ defmodule HelloWeb.UserSocket do
   @impl true
   def id(_socket), do: nil
 
-  def connect(%{"token" => token}, socket, _connect_info) do
-    # max_age: 1209600 is equivalent to two weeks in seconds
-    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
-      {:ok, user_id} ->
-        {:ok, assign(socket, :current_user, user_id)}
-      {:error, reason} ->
-        :error
-    end
+  # def connect(%{"token" => token}, socket, _connect_info) do
+  #   # max_age: 1209600 is equivalent to two weeks in seconds
+  #   case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+  #     {:ok, user_id} ->
+  #       {:ok, assign(socket, :current_user, user_id)}
+  #     {:error, reason} ->
+  #       :error
+  #   end
+  # end
+
+  def connect(params, socket, _connect_info) do
+    {:ok, assign(socket, :user_id, params["user_id"])}
   end
 end
