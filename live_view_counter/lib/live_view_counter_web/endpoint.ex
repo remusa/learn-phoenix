@@ -7,7 +7,7 @@ defmodule LiveViewCounterWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_live_view_counter_key",
-    signing_salt: "fqgFqC9w"
+    signing_salt: "729hS010scgVR8IxQza7/rAkuDdZPwY9"
   ]
 
   socket "/socket", LiveViewCounterWeb.UserSocket,
