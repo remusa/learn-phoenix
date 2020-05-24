@@ -2,6 +2,8 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import "../css/app.scss"
+import { Socket } from 'phoenix'
+import LiveSocket from 'phoenix_live_view'
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -13,3 +15,11 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+const csrfToken = document
+  .querySelector("meta[name='csrf-token']")
+  .getAttribute('content')
+const liveSocket = new LiveSocket('/live', Socket, {
+  params: { _csrf_token: csrfToken },
+})
+liveSocket.connect()
