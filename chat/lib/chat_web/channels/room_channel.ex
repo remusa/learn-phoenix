@@ -34,10 +34,10 @@ defmodule ChatWeb.RoomChannel do
 
   def handle_info(:after_join, socket) do
     Chat.Message.get_messages()
-    |> Enum.each(fn msg -> push(socket, "shout"), %{
+    |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,
-    } end)
-    {:noreply, socket}
+    }) end)
+    {:noreply, socket} # :noreply
   end
 end
