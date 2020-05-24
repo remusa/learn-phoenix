@@ -21,6 +21,7 @@ defmodule ChatWeb.RoomChannel do
   # broadcast to everyone in the current topic (room:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
+    Chat.Message.changeset(%Chat.Message{}, payload) |> Chat.Repo.insert
     broadcast socket, "shout", payload
     {:noreply, socket}
   end
